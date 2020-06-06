@@ -21,6 +21,7 @@ public struct DecodeDecision: NetworkDecision {
         data: Data,
         response: HTTPURLResponse
     ) -> Bool {
+        
         true
     }
     
@@ -39,6 +40,5 @@ public struct DecodeDecision: NetworkDecision {
         } catch {
             action(.errored(NetworkError.Response.decode(error)))
         }
-        
     }
 }
