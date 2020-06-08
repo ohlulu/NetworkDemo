@@ -9,11 +9,13 @@
 import Foundation
 import Alamofire
 
+// 封裝請求
 public protocol NetworkRequest: URLRequestConvertible {
     
-    /// 定義回傳的 Model
+    /// 宣告 generic for response model
     associatedtype Response: Decodable
     
+    /// 辨識用（ex. [101] - 登入）
     var tag: String { get }
     
     var baseURL: URL { get }
@@ -24,14 +26,16 @@ public protocol NetworkRequest: URLRequestConvertible {
     
     var headers: [String: String]? { get }
     
-    var parameters: Parameters? { get }
-    
+    /// 仿 Moya 封裝 upload/download request
     var task: Task { get }
     
+    /// request adapter
     var adapters: [RequestAdapter] { get }
     
+    /// response decision
     var decisions: [NetworkDecision] { get }
     
+    /// 定義回傳的 Model
     var responseModel: Response? { get set }
 }
 
@@ -42,19 +46,21 @@ public extension NetworkRequest {
     
     var baseURL: URL { URL(string: "https://postman-echo.com")! }
     
-    // 可以改成常用的
-    var method: HTTPMethod { .GET }
+    // 可以改成專案中常用的
+    var method: HTTPMethod { .get }
     
     var path: String { "" }
     
+    // 特定 API 才需要的 Header
     var headers: [String: String]? { nil }
     
+    // 固定的Header
     var defaultHeaders: [String: String]? { ["device": "iOS"] }
     
-    var parameters: Parameters? { nil }
-    
+    // 可以改成專案中常用的
     var task: Task { .normal }
     
+    // 預設用 defaultAdapters
     var adapters: [RequestAdapter] { defaultAdapters }
     
     var defaultAdapters: [RequestAdapter] {
@@ -63,7 +69,8 @@ public extension NetworkRequest {
             HeaderAdapter(default: defaultHeaders, data: headers)
         ]
     }
-       
+    
+    // 預設用 defaultDecisions
     var decisions: [NetworkDecision] { defaultDecisions }
     
     var defaultDecisions: [NetworkDecision] {
@@ -81,6 +88,7 @@ public extension NetworkRequest {
 }
 
 extension NetworkRequest {
+    
     var url: URL { baseURL.appendingPathComponent(path) }
 }
 

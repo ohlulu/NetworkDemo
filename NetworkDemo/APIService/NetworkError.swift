@@ -12,12 +12,7 @@ import Alamofire
 enum NetworkError: Error {
     
     enum MultipartFormdata: Error {
-        case labelIsNil
         case canNotAsData
-        case parseString
-        case parseInt
-        case parseImage
-        case canNotParseTypeToData
     }
     
     enum Response: Error {

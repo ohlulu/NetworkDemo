@@ -9,14 +9,22 @@
 import UIKit
 import Alamofire
 
+/// Multipar-form-data 的各種類型
 public struct MultipartColumn {
     
-    public enum FormDataProvider: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral {
+    public enum FormDataProvider:
+    ExpressibleByBooleanLiteral, ExpressibleByStringLiteral, ExpressibleByIntegerLiteral {
         
+        case bool(Bool)
         case string(String)
         case int(Int)
         case image(UIImage)
         case data(Data)
+        
+        
+        public init(booleanLiteral value: BooleanLiteralType) {
+            self = .bool(value)
+        }
         
         public init(stringLiteral value: StringLiteralType) {
             self = .string(value)
@@ -42,67 +50,6 @@ public struct MultipartColumn {
         self.fileName = fileName
         self.mimeType = mimeType
     }
-    
-    static func parseFrom<T: Encodable>(_ model: T) throws -> [MultipartColumn] {
-        
-        let dic = try model.asDictionary()
-        
-        let mirror = Mirror(reflecting: dic)
-        var columns = [MultipartColumn]()
-        for child in mirror.children {
-            
-            guard let label = child.label else {
-                throw NetworkError.MultipartFormdata.labelIsNil
-            }
-            
-            if child.value is String {
-                let column = try parse(string: child.value, label: label)
-                columns.append(column)
-            } else if child.value is Int {
-                let column = try parse(int: child.value, label: label)
-                columns.append(column)
-            } else if child.value is UIImage {
-               let column = try parse(image: child.value, label: label)
-               columns.append(column)
-            } else if child.value is Data {
-                guard let data = child.value as? Data else {
-                    throw NetworkError.MultipartFormdata.canNotParseTypeToData
-                }
-                let column = MultipartColumn(provider: .data(data), name: label)
-                columns.append(column)
-            } else {
-                throw NetworkError.MultipartFormdata.canNotParseTypeToData
-            }
-        }
-        return columns
-    }
-    
-    private static func parse(string: Any, label: String) throws -> MultipartColumn {
-        if let value = string as? String {
-            let column = MultipartColumn(provider: .string(value), name: label)
-            return column
-        }
-        
-        throw NetworkError.MultipartFormdata.parseString
-    }
-    
-    private static func parse(int: Any, label: String) throws -> MultipartColumn {
-        if let value = int as? Int {
-            let column = MultipartColumn(provider: .int(value), name: label)
-            return column
-        }
-        
-        throw NetworkError.MultipartFormdata.parseInt
-    }
-    
-    private static func parse(image: Any, label: String) throws -> MultipartColumn {
-        if let value = image as? UIImage {
-            let column = MultipartColumn(provider: .image(value), name: label)
-            return column
-        }
-        
-        throw NetworkError.MultipartFormdata.parseImage
-    }
 }
 
 public extension MultipartFormData {
@@ -110,6 +57,8 @@ public extension MultipartFormData {
     func adapted(columns: [MultipartColumn]) throws {
         for bodyPart in columns {
             switch bodyPart.provider {
+            case .bool(let bool):
+                append(data: bool.asData(), bodyPart: bodyPart)
             case .string(let str):
                 append(data: try str.asData(), bodyPart: bodyPart)
             case .int(let int):
@@ -127,10 +76,19 @@ public extension MultipartFormData {
     }
 }
 
+private extension Bool {
+    
+    func asData() -> Data {
+        
+        var valueInInt = Int(truncating: NSNumber(value: self))
+        return Data(bytes: &valueInInt, count: MemoryLayout<Bool>.size) //Int to Data
+    }
+}
 
 private extension String {
     
     func asData() throws -> Data {
+        
         if let data = data(using: .utf8) {
             return data
         }
@@ -141,6 +99,7 @@ private extension String {
 private extension UIImage {
     
     func asData() throws -> Data {
+        
         if let data = pngData() {
             return data
         }

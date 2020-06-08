@@ -10,15 +10,15 @@ import Foundation
 
 struct QueryItemAdapter: RequestAdapter {
     
-    let parameters: Parameters?
+    let parameters: [String: String]?
     
     func adapted(_ request: URLRequest) throws -> URLRequest {
-        guard let queryDictionary = parameters?.convertToQueryDictionary(),
+        guard let parameters = parameters,
             let url = request.url else {
             return request
         }
         
-        let queryItems = queryDictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
+        let queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         urlComponents?.queryItems = queryItems
         

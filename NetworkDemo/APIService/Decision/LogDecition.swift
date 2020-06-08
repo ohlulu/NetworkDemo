@@ -38,7 +38,7 @@ public struct LogDecision: NetworkDecision {
         } else {
             costTime = 0
         }
-
+        
         let log = """
         ----------------------------------------------------------------------
         \(request.tag)

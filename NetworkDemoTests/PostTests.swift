@@ -12,7 +12,7 @@ import XCTest
 struct PostWithJsonRequest: NetworkRequest {
     
     var path: String { "post" }
-    var method: HTTPMethod { .POST }
+    var method: HTTPMethod = .post 
     let data: HTTPBodyConvertible
     
     var adapters: [RequestAdapter] {
@@ -30,7 +30,7 @@ struct PostWithJsonRequest: NetworkRequest {
 struct PostJsonRequestModel: HTTPBodyConvertible {
     
     let foo1 = "foo1"
-    let foo2 = "foo2"
+    let foo2 = "中文呢"
 }
 
 struct PostJSONResponseModel: Decodable {
@@ -68,7 +68,7 @@ class PostTests: XCTestCase {
     func testPostWithDic() {
         let request = PostWithJsonRequest(data: [
             "foo1": "foo1",
-            "foo2": "foo2"
+            "foo2": "中文呢"
         ])
         let expectation = self.expectation(description: "testPostWithDic")
         client.send(request) { result in
@@ -76,7 +76,7 @@ class PostTests: XCTestCase {
             case .success(let data):
                 print("✅", data)
                 XCTAssertEqual(data.json.foo1, "foo1")
-                XCTAssertEqual(data.json.foo2, "foo2")
+                XCTAssertEqual(data.json.foo2, "中文呢")
                 XCTAssertEqual(data.headers.contentType, "application/json")
             case .failure(let error):
                 XCTFail("❌ 不應該出錯 -> \(error)")
@@ -96,7 +96,7 @@ class PostTests: XCTestCase {
             case .success(let data):
                 print("✅", data)
                 XCTAssertEqual(data.json.foo1, "foo1")
-                XCTAssertEqual(data.json.foo2, "foo2")
+                XCTAssertEqual(data.json.foo2, "中文呢")
                 XCTAssertEqual(data.headers.contentType, "application/json")
             case .failure(let error):
                 XCTFail("❌ 不應該出錯 -> \(error)")

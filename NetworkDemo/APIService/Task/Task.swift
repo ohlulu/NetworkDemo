@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// 可自行新增專案中用到的 Task 常用類型，並對應 alamofire 的 download/upload request
 public enum Task {
     
     case normal

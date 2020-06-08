@@ -44,6 +44,7 @@ public struct HTTPClient {
     ) -> CancelToken {
         let request = session.request(request)
             .responseData(completionHandler: { (afResponse: AFDataResponse<Data>) in
+                
                 guard let httpResponse = afResponse.response else {
                     handler(.failure(NetworkError.Response.nilResponse))
                     return
@@ -74,6 +75,7 @@ public struct HTTPClient {
         progress: @escaping ((Progress) -> Void),
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) -> CancelToken {
+        
         let multipartFormData = MultipartFormData()
         do {
             try multipartFormData.adapted(columns: multiparColumns)

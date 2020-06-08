@@ -11,11 +11,11 @@ import XCTest
 
 struct GetRequest: NetworkRequest {
     
-    var method: HTTPMethod = .GET
+    var method: HTTPMethod = .get
     var path: String = "get"
-    var parameters: Parameters? = [
+    var parameters: [String: String] = [
         "foo1": "foo1",
-        "foo2": "foo2"
+        "foo2": "測試中文"
     ]
     
     var adapters: [RequestAdapter] {
@@ -59,7 +59,7 @@ class NetworkDemoTests: XCTestCase {
             case .success(let data):
                 print("✅", data)
                 XCTAssertEqual(data.args.foo1, "foo1")
-                XCTAssertEqual(data.args.foo2, "foo2")
+                XCTAssertEqual(data.args.foo2, "測試中文")
             case .failure(let error):
                 XCTFail("❌ 不應該出錯 -> \(error)")
             }

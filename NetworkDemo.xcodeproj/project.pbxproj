@@ -27,9 +27,8 @@
 		50CB320F2487B23A008FCA96 /* AnyAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB320E2487B23A008FCA96 /* AnyAdapter.swift */; };
 		50CB32132487B569008FCA96 /* MethodAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32122487B569008FCA96 /* MethodAdapter.swift */; };
 		50CB32152487B5FA008FCA96 /* HeaderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32142487B5FA008FCA96 /* HeaderAdapter.swift */; };
-		50CB32172487C4FB008FCA96 /* ParameterConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32162487C4FB008FCA96 /* ParameterConvertible.swift */; };
 		50CB321D2487C995008FCA96 /* StatusCodeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB321C2487C995008FCA96 /* StatusCodeDecision.swift */; };
-		50CB322724889005008FCA96 /* Get+QueryItem_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB322624889005008FCA96 /* Get+QueryItem_Tests.swift */; };
+		50CB322724889005008FCA96 /* Get+QueryItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB322624889005008FCA96 /* Get+QueryItemTests.swift */; };
 		50CB32312488E9F7008FCA96 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32302488E9F7008FCA96 /* HTTPMethod.swift */; };
 		50EEFC542487945000F9C2B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EEFC532487945000F9C2B6 /* AppDelegate.swift */; };
 		50EEFC582487945000F9C2B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EEFC572487945000F9C2B6 /* ViewController.swift */; };
@@ -75,10 +74,9 @@
 		50CB320E2487B23A008FCA96 /* AnyAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAdapter.swift; sourceTree = "<group>"; };
 		50CB32122487B569008FCA96 /* MethodAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodAdapter.swift; sourceTree = "<group>"; };
 		50CB32142487B5FA008FCA96 /* HeaderAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAdapter.swift; sourceTree = "<group>"; };
-		50CB32162487C4FB008FCA96 /* ParameterConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterConvertible.swift; sourceTree = "<group>"; };
 		50CB321C2487C995008FCA96 /* StatusCodeDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCodeDecision.swift; sourceTree = "<group>"; };
 		50CB322424889005008FCA96 /* NetworkDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CB322624889005008FCA96 /* Get+QueryItem_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Get+QueryItem_Tests.swift"; sourceTree = "<group>"; };
+		50CB322624889005008FCA96 /* Get+QueryItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Get+QueryItemTests.swift"; sourceTree = "<group>"; };
 		50CB322824889005008FCA96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50CB32302488E9F7008FCA96 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		50EEFC502487945000F9C2B6 /* NetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,7 +133,6 @@
 			children = (
 				500E7767248A4EE90062C50A /* NetworkTypealias.swift */,
 				50CB32302488E9F7008FCA96 /* HTTPMethod.swift */,
-				50CB32162487C4FB008FCA96 /* ParameterConvertible.swift */,
 				50CB31FF2487A684008FCA96 /* NetworkRequest.swift */,
 				50CB32052487A891008FCA96 /* HTTPClient.swift */,
 				50CB320A2487A98E008FCA96 /* NetworkError.swift */,
@@ -192,7 +189,7 @@
 		50CB322524889005008FCA96 /* NetworkDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				50CB322624889005008FCA96 /* Get+QueryItem_Tests.swift */,
+				50CB322624889005008FCA96 /* Get+QueryItemTests.swift */,
 				500E776C248A87110062C50A /* PostTests.swift */,
 				50A891C0248CD34400014FDE /* UploadTest.swift */,
 				50CB322824889005008FCA96 /* Info.plist */,
@@ -431,7 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CB322724889005008FCA96 /* Get+QueryItem_Tests.swift in Sources */,
+				50CB322724889005008FCA96 /* Get+QueryItemTests.swift in Sources */,
 				50A891C1248CD34400014FDE /* UploadTest.swift in Sources */,
 				500E776D248A87110062C50A /* PostTests.swift in Sources */,
 			);
@@ -447,7 +444,6 @@
 				500E776F248A8AEB0062C50A /* JSONAdapter.swift in Sources */,
 				500E7775248B909E0062C50A /* Task.swift in Sources */,
 				50CB32002487A684008FCA96 /* NetworkRequest.swift in Sources */,
-				50CB32172487C4FB008FCA96 /* ParameterConvertible.swift in Sources */,
 				50CB32062487A891008FCA96 /* HTTPClient.swift in Sources */,
 				50CB320B2487A98E008FCA96 /* NetworkError.swift in Sources */,
 				50A891BD248CBBBF00014FDE /* MultipartFormData.swift in Sources */,

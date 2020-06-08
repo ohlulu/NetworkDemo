@@ -12,7 +12,7 @@ import XCTest
 struct UploadRequest: NetworkRequest {
     
     var baseURL: URL { URL(string: "https://api.imgur.com/3/upload")! }
-    var method: HTTPMethod { .POST }
+    var method: HTTPMethod = .post
     var headers: [String : String]? {
         ["Authorization": "Client-ID 20817cd2e0e08b2"]
     }
