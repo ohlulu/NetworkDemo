@@ -22,10 +22,27 @@ public struct HTTPClient {
         _ request: Req,
         decisions: [NetworkDecision]? = nil,
         plugins: [HTTPPlugin] = [],
+        progress: @escaping ((Progress) -> Void) = { _ in },
         handler: @escaping (Result<Req.Response, Error>) -> Void
-    ) -> Request {
+    ) -> CancelToken {
         
-        session.request(request)
+        switch request.task {
+        case .normal:
+            return sendNormalRequest(request, decisions: decisions, plugins: plugins, handler: handler)
+        case .upload(let multipartColumns):
+            return sendUploadRequest(request, multiparColumns: multipartColumns, progress: progress, handler: handler)
+        }
+        
+        
+    }
+
+    private func sendNormalRequest<Req: HTTPRequest>(
+        _ request: Req,
+        decisions: [NetworkDecision]? = nil,
+        plugins: [HTTPPlugin] = [],
+        handler: @escaping (Result<Req.Response, Error>) -> Void
+    ) -> CancelToken {
+        let request = session.request(request)
             .responseData(completionHandler: { (afResponse: AFDataResponse<Data>) in
                 guard let httpResponse = afResponse.response else {
                     handler(.failure(NetworkError.Response.nilResponse))
@@ -46,6 +63,47 @@ public struct HTTPClient {
                     handler(.failure(NetworkError.AF.error(error)))
                 }
             })
+        return CancelToken(request: request)
+    }
+    
+    private func sendUploadRequest<Req: HTTPRequest>(
+        _ request: Req,
+        multiparColumns: [MultipartColumn],
+        decisions: [NetworkDecision]? = nil,
+        plugins: [HTTPPlugin] = [],
+        progress: @escaping ((Progress) -> Void),
+        handler: @escaping (Result<Req.Response, Error>) -> Void
+    ) -> CancelToken {
+        let multipartFormData = MultipartFormData()
+        do {
+            try multipartFormData.adapted(columns: multiparColumns)
+        } catch {
+            handler(.failure(error))
+        }
+        
+        let uploadRequest = session.upload(multipartFormData: multipartFormData, with: request)
+            .uploadProgress(closure: progress)
+            .responseData(completionHandler: { (afResponse: AFDataResponse<Data>) in
+                guard let httpResponse = afResponse.response else {
+                    handler(.failure(NetworkError.Response.nilResponse))
+                    return
+                }
+                
+                switch afResponse.result {
+                case .success(let data):
+                    self.handleDecision(
+                        request: request,
+                        data: data,
+                        response: httpResponse,
+                        decisions: decisions ?? request.decisions,
+                        plugins: plugins,
+                        handler: handler
+                    )
+                case .failure(let error):
+                    handler(.failure(NetworkError.AF.error(error)))
+                }
+            })
+        return CancelToken(request: uploadRequest)
     }
     
     private func handleDecision<Req: HTTPRequest>(

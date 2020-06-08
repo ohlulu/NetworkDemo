@@ -9,13 +9,26 @@
 import Foundation
 
 public struct HeaderAdapter: RequestAdapter {
-    
+
+    let `default`: [String: String]?
     let data: [String: String]?
     
     public func adapted(_ request: URLRequest) throws -> URLRequest {
-        guard let data = data else { return request }
+        guard let `default` = `default` else {
+            return request
+        }
         
         var request = request
+        
+        `default`.forEach { key, value in
+            request.addValue(value, forHTTPHeaderField: key)
+        }
+        
+        
+        guard let data = data else {
+            return request
+        }
+        
         data.forEach { key, value in
             request.addValue(value, forHTTPHeaderField: key)
         }

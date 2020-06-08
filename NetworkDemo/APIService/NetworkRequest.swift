@@ -22,7 +22,11 @@ public protocol NetworkRequest: URLRequestConvertible {
     
     var method: HTTPMethod { get }
     
+    var headers: [String: String]? { get }
+    
     var parameters: Parameters? { get }
+    
+    var task: Task { get }
     
     var adapters: [RequestAdapter] { get }
     
@@ -43,20 +47,20 @@ public extension NetworkRequest {
     
     var path: String { "" }
     
-    var headers: [String: String]? {
-        [
-            "device": "iOS"
-        ]
-    }
+    var headers: [String: String]? { nil }
+    
+    var defaultHeaders: [String: String]? { ["device": "iOS"] }
     
     var parameters: Parameters? { nil }
+    
+    var task: Task { .normal }
     
     var adapters: [RequestAdapter] { defaultAdapters }
     
     var defaultAdapters: [RequestAdapter] {
         [
             MethodAdapter(method: method),
-            HeaderAdapter(data: headers)
+            HeaderAdapter(default: defaultHeaders, data: headers)
         ]
     }
        

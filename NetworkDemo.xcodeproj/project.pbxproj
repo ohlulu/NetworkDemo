@@ -13,7 +13,11 @@
 		500E776A248A52830062C50A /* DoneDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E7769248A52830062C50A /* DoneDecision.swift */; };
 		500E776D248A87110062C50A /* PostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E776C248A87110062C50A /* PostTests.swift */; };
 		500E776F248A8AEB0062C50A /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E776E248A8AEB0062C50A /* JSONAdapter.swift */; };
+		500E7775248B909E0062C50A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E7774248B909E0062C50A /* Task.swift */; };
 		5085EB9D2488FD2A0088085E /* DecodeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085EB9C2488FD2A0088085E /* DecodeDecision.swift */; };
+		50A891BD248CBBBF00014FDE /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A891BC248CBBBF00014FDE /* MultipartFormData.swift */; };
+		50A891BF248CC55A00014FDE /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A891BE248CC55A00014FDE /* Cancelable.swift */; };
+		50A891C1248CD34400014FDE /* UploadTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A891C0248CD34400014FDE /* UploadTest.swift */; };
 		50CB32002487A684008FCA96 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB31FF2487A684008FCA96 /* NetworkRequest.swift */; };
 		50CB32042487A78E008FCA96 /* NetworkDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32032487A78E008FCA96 /* NetworkDecision.swift */; };
 		50CB32062487A891008FCA96 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB32052487A891008FCA96 /* HTTPClient.swift */; };
@@ -57,7 +61,11 @@
 		500E7769248A52830062C50A /* DoneDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneDecision.swift; sourceTree = "<group>"; };
 		500E776C248A87110062C50A /* PostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTests.swift; sourceTree = "<group>"; };
 		500E776E248A8AEB0062C50A /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; };
+		500E7774248B909E0062C50A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		5085EB9C2488FD2A0088085E /* DecodeDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodeDecision.swift; sourceTree = "<group>"; };
+		50A891BC248CBBBF00014FDE /* MultipartFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
+		50A891BE248CC55A00014FDE /* Cancelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancelable.swift; sourceTree = "<group>"; };
+		50A891C0248CD34400014FDE /* UploadTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTest.swift; sourceTree = "<group>"; };
 		50CB31FF2487A684008FCA96 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		50CB32032487A78E008FCA96 /* NetworkDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDecision.swift; sourceTree = "<group>"; };
 		50CB32052487A891008FCA96 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -113,6 +121,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		500E7773248B908F0062C50A /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				500E7774248B909E0062C50A /* Task.swift */,
+				50A891BC248CBBBF00014FDE /* MultipartFormData.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
 		50CB31CE2487A5E9008FCA96 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,10 +139,12 @@
 				50CB31FF2487A684008FCA96 /* NetworkRequest.swift */,
 				50CB32052487A891008FCA96 /* HTTPClient.swift */,
 				50CB320A2487A98E008FCA96 /* NetworkError.swift */,
+				500E7773248B908F0062C50A /* Task */,
 				50CB31FD2487A646008FCA96 /* Decision */,
 				50CB31FC2487A641008FCA96 /* Adapter */,
 				50CB31FE2487A64A008FCA96 /* Plugin */,
 				50CB32092487A974008FCA96 /* Error */,
+				50A891BE248CC55A00014FDE /* Cancelable.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -175,6 +194,7 @@
 			children = (
 				50CB322624889005008FCA96 /* Get+QueryItem_Tests.swift */,
 				500E776C248A87110062C50A /* PostTests.swift */,
+				50A891C0248CD34400014FDE /* UploadTest.swift */,
 				50CB322824889005008FCA96 /* Info.plist */,
 			);
 			path = NetworkDemoTests;
@@ -412,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CB322724889005008FCA96 /* Get+QueryItem_Tests.swift in Sources */,
+				50A891C1248CD34400014FDE /* UploadTest.swift in Sources */,
 				500E776D248A87110062C50A /* PostTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,12 +445,15 @@
 				500E7768248A4EE90062C50A /* NetworkTypealias.swift in Sources */,
 				50CB32042487A78E008FCA96 /* NetworkDecision.swift in Sources */,
 				500E776F248A8AEB0062C50A /* JSONAdapter.swift in Sources */,
+				500E7775248B909E0062C50A /* Task.swift in Sources */,
 				50CB32002487A684008FCA96 /* NetworkRequest.swift in Sources */,
 				50CB32172487C4FB008FCA96 /* ParameterConvertible.swift in Sources */,
 				50CB32062487A891008FCA96 /* HTTPClient.swift in Sources */,
 				50CB320B2487A98E008FCA96 /* NetworkError.swift in Sources */,
+				50A891BD248CBBBF00014FDE /* MultipartFormData.swift in Sources */,
 				500E7766248A4AF70062C50A /* LogDecition.swift in Sources */,
 				50CB32152487B5FA008FCA96 /* HeaderAdapter.swift in Sources */,
+				50A891BF248CC55A00014FDE /* Cancelable.swift in Sources */,
 				500E7764248A3F060062C50A /* QueryItemAdapter.swift in Sources */,
 				50CB321D2487C995008FCA96 /* StatusCodeDecision.swift in Sources */,
 				50EEFC582487945000F9C2B6 /* ViewController.swift in Sources */,

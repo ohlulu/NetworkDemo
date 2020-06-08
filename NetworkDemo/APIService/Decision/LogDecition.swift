@@ -45,6 +45,7 @@ public struct LogDecision: NetworkDecision {
         path -> \(request.urlRequest?.url?.absoluteString ?? "nil")
         request time -> \(startTime?.toString() ?? "nil")
         cost time -> \(String(format: "%.3f", costTime)) s
+        headers -> \(request.urlRequest?.allHTTPHeaderFields ?? [:])
         Request Body -> \(jsonString(data: request.urlRequest?.httpBody))
         Response Body -> \(jsonString(data: data))
         ----------------------------------------------------------------------
