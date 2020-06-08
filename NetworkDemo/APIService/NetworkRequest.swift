@@ -76,8 +76,8 @@ public extension NetworkRequest {
     var defaultDecisions: [NetworkDecision] {
         [
             LogDecision(),
-            DecodeDecision(),
             StatusCodeDecision(),
+            DecodeDecision(),
             DoneDecision()
         ]
     }
