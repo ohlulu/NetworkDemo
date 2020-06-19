@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DecodeDecision: NetworkDecision {
+public struct DecodeDecision: HTTPDecision {
     
     let decoder: JSONDecoder
     
@@ -38,7 +38,7 @@ public struct DecodeDecision: NetworkDecision {
             request.responseModel = model
             action(.next(request, data, response))
         } catch {
-            action(.errored(NetworkError.Response.decode(error)))
+            action(.errored(HTTPError.Response.decode(error)))
         }
     }
 }

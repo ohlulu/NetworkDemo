@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DoneDecision: NetworkDecision {
+public struct DoneDecision: HTTPDecision {
 
     public func shouldApply<Req: HTTPRequest>(
         request: Req,
@@ -25,8 +25,9 @@ public struct DoneDecision: NetworkDecision {
         response: HTTPURLResponse,
         action: @escaping (DecisionAction<Req>) -> Void
     ) {
+        
         guard let model = request.responseModel else {
-            action(.errored(NetworkError.Decision.somethingErrorAtDecodeDecision))
+            action(.errored(HTTPError.Decision.somethingErrorAtDecodeDecision))
             return
         }
         action(.done(model))

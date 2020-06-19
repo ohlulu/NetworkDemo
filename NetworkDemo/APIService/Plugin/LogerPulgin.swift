@@ -1,36 +1,26 @@
 //
-//  LogDecition.swift
-//  NetworkDemo
+//  LogerPulgin.swift
+//  FlickrDemo
 //
-//  Created by Ohlulu on 2020/6/5.
+//  Created by Ohlulu on 2020/6/17.
 //  Copyright © 2020 ohlulu. All rights reserved.
 //
 
 import Foundation
 
-public struct LogDecision: NetworkDecision {
-    
+class LoggerPlugin: HTTPPlugin {
     
     var startTime: Date?
     var endTime: Date?
     
     fileprivate static let formatter = DateFormatter()
     
-    public func shouldApply<Req: HTTPRequest>(
-        request: Req,
-        data: Data,
-        response: HTTPURLResponse
-    ) -> Bool {
-        
-        true
+    func willSend<Req>(_ request: (Req, URLRequest?)) where Req : HTTPRequest {
+        startTime = Date()
     }
     
-    public func apply<Req: HTTPRequest>(
-        request: Req,
-        data: Data,
-        response: HTTPURLResponse,
-        action: @escaping (DecisionAction<Req>) -> Void
-    ) {
+    func didReceive<Req>(_ request: (Req, URLRequest?), result: ResultType) where Req : HTTPRequest {
+        endTime = Date()
         
         let costTime: TimeInterval
         if let startTime = startTime, let endTime = endTime {
@@ -41,18 +31,17 @@ public struct LogDecision: NetworkDecision {
         
         let log = """
         ----------------------------------------------------------------------
-        \(request.tag)
-        path -> \(request.urlRequest?.url?.absoluteString ?? "nil")
+        \(request.0.tag)
+        URL -> \(request.0.urlRequest?.url?.absoluteString ?? "nil")
         request time -> \(startTime?.toString() ?? "nil")
         cost time -> \(String(format: "%.3f", costTime)) s
-        headers -> \(request.urlRequest?.allHTTPHeaderFields ?? [:])
-        Request Body -> \(jsonString(data: request.urlRequest?.httpBody))
-        Response Body -> \(jsonString(data: data))
+        headers -> \(request.1?.allHTTPHeaderFields ?? [:])
+        Request Body -> \(jsonString(data: request.1?.httpBody))
+        Response Body -> \(jsonString(data: result.0))
         ----------------------------------------------------------------------
         """
         
         print(log)
-        action(.next(request, data, response))
     }
     
     private func jsonString(data: Data?) -> String {
@@ -64,13 +53,13 @@ public struct LogDecision: NetworkDecision {
         }
         return string.replacingOccurrences(of: "\\", with: "")
     }
-}
 
+}
 
 
 private extension Date {
     func toString() -> String {
-        let formatter = LogDecision.formatter
+        let formatter = LoggerPlugin.formatter
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         return formatter.string(from: self)
     }

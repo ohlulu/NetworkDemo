@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  HTTPRequest.swift
 //  NetworkDemo
 //
 //  Created by Ohlulu on 2020/6/3.
@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 // 封裝請求
-public protocol NetworkRequest: URLRequestConvertible {
+public protocol HTTPRequest: URLRequestConvertible {
     
     /// 宣告 generic for response model
     associatedtype Response: Decodable
@@ -26,20 +26,22 @@ public protocol NetworkRequest: URLRequestConvertible {
     
     var headers: [String: String]? { get }
     
-    /// 仿 Moya 封裝 upload/download request
+    /// 仿 Moya 封裝 upload/download... request
     var task: Task { get }
     
     /// request adapter
     var adapters: [RequestAdapter] { get }
     
+    var plugins: [HTTPPlugin] { get }
+    
     /// response decision
-    var decisions: [NetworkDecision] { get }
+    var decisions: [HTTPDecision] { get }
     
     /// 定義回傳的 Model
     var responseModel: Response? { get set }
 }
 
-public extension NetworkRequest {
+public extension HTTPRequest {
     
     // setup default value
     var tag: String { "Tag not set." }
@@ -55,7 +57,7 @@ public extension NetworkRequest {
     var headers: [String: String]? { nil }
     
     // 固定的Header
-    var defaultHeaders: [String: String]? { ["device": "iOS"] }
+    var defaultHeaders: [String: String]? { nil }
     
     // 可以改成專案中常用的
     var task: Task { .normal }
@@ -66,19 +68,27 @@ public extension NetworkRequest {
     var defaultAdapters: [RequestAdapter] {
         [
             MethodAdapter(method: method),
-            HeaderAdapter(default: defaultHeaders, data: headers)
+            HeaderAdapter(default: defaultHeaders, data: headers),
+            task
         ]
     }
     
     // 預設用 defaultDecisions
-    var decisions: [NetworkDecision] { defaultDecisions }
+    var decisions: [HTTPDecision] { defaultDecisions }
     
-    var defaultDecisions: [NetworkDecision] {
+    var defaultDecisions: [HTTPDecision] {
         [
-            LogDecision(),
             StatusCodeDecision(),
             DecodeDecision(),
             DoneDecision()
+        ]
+    }
+    
+    var plugins: [HTTPPlugin] { defaultPlugins }
+    
+    var defaultPlugins: [HTTPPlugin] {
+        [
+            LoggerPlugin()
         ]
     }
     
@@ -87,12 +97,12 @@ public extension NetworkRequest {
     }
 }
 
-extension NetworkRequest {
+extension HTTPRequest {
     
     var url: URL { baseURL.appendingPathComponent(path) }
 }
 
-extension NetworkRequest {
+extension HTTPRequest {
     
     public func asURLRequest() throws -> URLRequest {
         

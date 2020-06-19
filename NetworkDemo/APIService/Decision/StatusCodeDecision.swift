@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct StatusCodeDecision: NetworkDecision {
+public struct StatusCodeDecision: HTTPDecision {
 
     public func shouldApply<Req: HTTPRequest>(
         request: Req,
@@ -26,6 +26,6 @@ public struct StatusCodeDecision: NetworkDecision {
         action: @escaping (DecisionAction<Req>) -> Void
     ) {
         
-        action(.errored(NetworkError.Response.statusCode(code: response.statusCode, body: data)))
+        action(.errored(HTTPError.Response.statusCode(code: response.statusCode, body: data)))
     }
 }

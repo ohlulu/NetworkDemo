@@ -19,10 +19,10 @@ public final class CancelToken: Cancellable {
     let cancelAction: () -> Void
     let request: Request?
     
-    init(request: Request) {
+    init(request: Request? = nil) {
         self.request = request
         self.cancelAction = {
-            request.cancel()
+            request?.cancel()
         }
     }
     

@@ -9,7 +9,7 @@
 import XCTest
 @testable import NetworkDemo
 
-struct UploadRequest: NetworkRequest {
+struct UploadRequest: HTTPRequest {
     
     var baseURL: URL { URL(string: "https://api.imgur.com/3/upload")! }
     var method: HTTPMethod = .post

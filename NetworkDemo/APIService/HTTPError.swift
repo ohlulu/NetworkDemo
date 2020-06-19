@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkError: Error {
+enum HTTPError: Error {
     
     enum MultipartFormdata: Error {
         case canNotAsData
@@ -20,10 +20,6 @@ enum NetworkError: Error {
         case nilResponse
         case statusCode(code: Int, body: Data)
         case decode(Error)
-    }
-    
-    enum AF: Error {
-        case error(AFError)
     }
     
     enum Decision: Error {

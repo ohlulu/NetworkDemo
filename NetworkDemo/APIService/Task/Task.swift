@@ -14,4 +14,25 @@ public enum Task {
     case normal
     
     case upload([MultipartColumn])
+    
+    case download(DownloadDestination)
+}
+
+extension Task: RequestAdapter {
+    public func adapted(_ request: URLRequest) throws -> URLRequest {
+        
+        var request = request
+        let contentField = "Content-Type"
+        
+        switch self {
+        case .normal:
+            request.addValue("application/json", forHTTPHeaderField: contentField)
+        case .upload:
+            request.addValue("multipart/form-data", forHTTPHeaderField: contentField)
+        case .download:
+            break
+        }
+        
+        return request
+    }
 }

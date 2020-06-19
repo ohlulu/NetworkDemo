@@ -9,7 +9,7 @@
 import XCTest
 @testable import NetworkDemo
 
-struct GetRequest: NetworkRequest {
+struct GetRequest: HTTPRequest {
     
     var method: HTTPMethod = .get
     var path: String = "get"

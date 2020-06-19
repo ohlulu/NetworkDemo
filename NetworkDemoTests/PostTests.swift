@@ -9,7 +9,7 @@
 import XCTest
 @testable import NetworkDemo
 
-struct PostWithJsonRequest: NetworkRequest {
+struct PostWithJsonRequest: HTTPRequest {
     
     var path: String { "post" }
     var method: HTTPMethod = .post 

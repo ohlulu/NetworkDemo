@@ -8,14 +8,11 @@
 
 import Foundation
 
-public protocol HTTPPlugin {
+public protocol HTTPPlugin: class {
     
+    typealias RequestType<Req: HTTPRequest> = (Req, URLRequest?)
     typealias ResultType = (Data?, URLResponse?, Error?)
-    func willSend<Req: HTTPRequest>(_ request: Req, urlRequest: URLRequest)
-    func didReceive<Req: HTTPRequest>(_ request: Req, result: ResultType)
-}
-
-public extension HTTPPlugin {
-    func willSend<Req: HTTPRequest>(_ request: Req, urlRequest: URLRequest) { }
-    func didReceive<Req: HTTPRequest>(_ request: Req, result: ResultType) { }
+    
+    func willSend<Req: HTTPRequest>(_ request: RequestType<Req>)
+    func didReceive<Req: HTTPRequest>(_ request: RequestType<Req>, result: ResultType)
 }

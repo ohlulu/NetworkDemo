@@ -92,7 +92,7 @@ private extension String {
         if let data = data(using: .utf8) {
             return data
         }
-        throw NetworkError.MultipartFormdata.canNotAsData
+        throw HTTPError.MultipartFormdata.canNotAsData
     }
 }
 
@@ -103,7 +103,7 @@ private extension UIImage {
         if let data = pngData() {
             return data
         }
-        throw NetworkError.MultipartFormdata.canNotAsData
+        throw HTTPError.MultipartFormdata.canNotAsData
     }
 }
 

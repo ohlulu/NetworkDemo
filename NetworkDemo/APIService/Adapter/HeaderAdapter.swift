@@ -14,23 +14,20 @@ public struct HeaderAdapter: RequestAdapter {
     let data: [String: String]?
     
     public func adapted(_ request: URLRequest) throws -> URLRequest {
-        guard let `default` = `default` else {
-            return request
-        }
-        
         var request = request
         
-        `default`.forEach { key, value in
-            request.addValue(value, forHTTPHeaderField: key)
+        if let `default` = `default` {
+
+            `default`.forEach { key, value in
+                request.addValue(value, forHTTPHeaderField: key)
+            }
         }
         
-        
-        guard let data = data else {
-            return request
-        }
-        
-        data.forEach { key, value in
-            request.addValue(value, forHTTPHeaderField: key)
+        if let data = data {
+            
+            data.forEach { key, value in
+                request.addValue(value, forHTTPHeaderField: key)
+            }
         }
         
         return request
